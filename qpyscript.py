@@ -11,22 +11,8 @@ import sys
 import argparse as ap
 from pyslext.argparsing import HelpFormatter, StoreDatetime
 
-
-## Console
-def csi(n, x):
-    """ Control sequence introducer. """
-    return '\x1b[{n}{x}'.format(n=n, x=x)
-
-
-def xcolor(clr):
-    """ *clr* may be an integer from 0 to 255. """
-    k = ";5;{}m".format(clr)
-    return csi(38, k)
-
-
-def nocolor():
-    """ Reset / normal. """
-    return csi(0, 'm')
+## Console output
+from pyslext.console import csi, xcolor, nocolor
 
 
 class Argument(object):
@@ -121,4 +107,3 @@ class Script(object):
 
     def run(self):
         pass
-
