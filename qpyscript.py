@@ -1,5 +1,5 @@
 """
-.. script.py
+.. qpyscript.py
 
 General framework for quick scripts.
 """
