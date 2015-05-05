@@ -28,12 +28,23 @@ def nocolor():
     return csi(0, 'm')
 
 
-
+## Argument parsing
 class HelpFormatter(ap.HelpFormatter):
   """ A simple Help Formatter which obeys the 79 chars convention. """
   def __init__(self, *args, **kwargs):
     kwargs.update(width=79)
     super(HelpFormatter, self).__init__(*args, **kwargs)
+
+
+class StoreDatetime(ap.Action):
+  def __init__(self, option_strings, dest, default=None, required=False,
+               help=None, metavar=None):
+    super(StoreDatetime, self).__init__(
+        option_strings=option_strings, dest=dest, nargs=None, default=default,
+        required=required, help=help, metavar=metavar)
+
+  def __call__(self, parser, namespace, values, option_string=None):
+    setattr(namespace, self.dest, dp.parse(values))
 
 
 class Argument(object):
@@ -70,6 +81,7 @@ class Argument(object):
         return _kwargs
 
 
+## Main class
 class Script(object):
     DEBUG_COL = 37
     INFO_COL = 61
