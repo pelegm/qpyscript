@@ -9,10 +9,10 @@ import sys
 
 ## Argument parsing
 import argparse as ap
-from pyslext.argparsing import HelpFormatter, StoreDatetime
+from .pyslext.argparsing import HelpFormatter, StoreDatetime
 
 ## Console output
-from pyslext.console import csi, xcolor, nocolor
+from .pyslext.console import csi, xcolor, nocolor
 
 
 class Argument(object):
@@ -83,8 +83,7 @@ class Script(object):
         sys.exit(exit_code)
 
     def _prompt(self, msg, title, color):
-        print xcolor(color) + title[0].upper()\
-            + " :: " + nocolor() + msg
+        print(xcolor(color) + title[0].upper() + " :: " + nocolor() + msg)
 
     def debug(self, msg):
         self._prompt(msg, "debug", self.DEBUG_COL)
