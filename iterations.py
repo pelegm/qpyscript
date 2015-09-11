@@ -62,12 +62,12 @@ def grouper(iterable, n):
     >>> grouper('ABCDEFG', 3)  # --> ABC DEF
     """
     args = [iter(iterable)] * n
-    return izip(*args)
+    return it.izip(*args)
 
 
 def mzip(mapping):
     """ Return a zipped version of a mapping of iterables, as an iterable
-    (like :func:`izip`).
+    (like :func:`it.izip`).
 
     :param mapping: the mapping to be zipped
     :type iterable: :term:`mapping`
@@ -79,7 +79,7 @@ def mzip(mapping):
     [{'a': 1, 'b': 2, 'c': 3}, {'a': 2, 'b': 3, 'c': 4}]
     """
     keys, values = unzip(mapping.iteritems())
-    return (dict(izip(keys, val_tup)) for val_tup in izip(*values))
+    return (dict(it.izip(keys, val_tup)) for val_tup in it.izip(*values))
 
 
 def pairwise(iterable):
@@ -93,9 +93,9 @@ def pairwise(iterable):
 
     >>> pairwise([0, 1, 2, 3])  # --> (0, 1), (1, 2), (2, 3)
     """
-    a, b = tee(iterable)
+    a, b = it.tee(iterable)
     next(b, None)
-    return izip(a, b)
+    return it.izip(a, b)
 
 
 def powerset(sequence, minsize=0, maxsize=inf):
@@ -161,18 +161,18 @@ def triwise(iterable):
 
     >>> triwise([0, 1, 2, 3, 4])  # --> (0, 1, 2), (1, 2, 3), (2, 3, 4)
     """
-    a, b, c = tee(iterable, 3)
+    a, b, c = it.tee(iterable, 3)
     next(b, None)
     next(c, None)
     next(c, None)
-    return izip(a, b, c)
+    return it.izip(a, b, c)
 
 
 def nwise(iterable, n=2):
-    iters = tee(iterable, n)
+    iters = it.tee(iterable, n)
     for i, it in enumerate(iters):
         next(islice(it, i, i), None)
-    return izip(*iters)
+    return it.izip(*iters)
 
 
 def uniquify(iterable):
@@ -202,7 +202,7 @@ def uniquify(iterable):
 
 
 def unzip(zipped):
-    """ Return a :term:`generator` reverses the work of zip/izip.
+    """ Return a :term:`generator` reverses the work of zip/it.izip.
 
     :param zipped: the iterable to unzip.
     :type zipped: :term:`iterable` of :term:`iterables <iterable>`.
@@ -212,20 +212,20 @@ def unzip(zipped):
 
     >>> list(unzip(zip(xrange(3), xrange(2, 5))))
     [(0, 1, 2), (2, 3, 4)]
-    >>> list(unzip(izip(xrange(3), xrange(2, 5))))
+    >>> list(unzip(it.izip(xrange(3), xrange(2, 5))))
     [(0, 1, 2), (2, 3, 4)]
 
     .. note:: The returned elements of the generator are always tuples.
               This is a result of how :func:`zip` works.
     """
-    return izip(*zipped)
+    return it.izip(*zipped)
 
 
 def transpose(zipped, n):
     """ Return *n* generators, where *n* is the number of elements in each of
     the zipped generators (they can have more, but only these will be
     considered).  """
-    teed = tee(zipped, n)
+    teed = it.tee(zipped, n)
     for i in xrange(n):
         gen = lambda teed, i=i: (e[i] for e in teed[i])
         yield gen(teed)
