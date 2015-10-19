@@ -69,14 +69,15 @@ class Script(object):
         ap_kwargs['prog'] = self.prog
         ap_kwargs['description'] = self.description
         ap_kwargs['epilog'] = self.epilog
-        ap_kwargs['version'] = self.version
         arg_parser = ap.ArgumentParser(
             formatter_class=HelpFormatter, **ap_kwargs)
         for arg in self.arguments:
             arg_parser.add_argument(*arg.args, **arg.kwargs)
+        arg_parser.add_argument("--version", action='version',
+                                version=self.version)
 
         ## Parse
-        for key, value in dict(vars(arg_parser.parse_args())).viewitems():
+        for key, value in dict(vars(arg_parser.parse_args())).items():
             setattr(self, key, value)
 
     def exit(self, exit_code=None):
