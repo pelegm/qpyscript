@@ -1,0 +1,3 @@
+[submodule "pyslext"]
+	path = pyslext
+	url = https://github.com/pelegm/pyslext.git
