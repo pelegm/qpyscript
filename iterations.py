@@ -115,7 +115,7 @@ def roundrobin(*iterables):
                 yield next()
         except StopIteration:
             pending -= 1
-            nexts = it.cycle(islice(nexts, pending))
+            nexts = it.cycle(it.islice(nexts, pending))
 
 
 def sfilter(predicate, *iterables):
