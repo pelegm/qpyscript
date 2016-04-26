@@ -170,8 +170,8 @@ def triwise(iterable):
 
 def nwise(iterable, n=2):
     iters = it.tee(iterable, n)
-    for i, it in enumerate(iters):
-        next(islice(it, i, i), None)
+    for i, j in enumerate(iters):
+        next(islice(j, i, i), None)
     return it.izip(*iters)
 
 
